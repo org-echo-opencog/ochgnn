@@ -11,6 +11,12 @@ require('nngraph.JustElement')
 require('nngraph.JustTable')
 require('nngraph.ModuleFromCriterion')
 
+-- OpenCog AtomSpace integration
+require('nngraph.atomspace')
+require('nngraph.atom_types')
+require('nngraph.atom_node')
+require('nngraph.hypergraph_module')
+
 -- handy functions
 local utils = require('nngraph.utils')
 local istensor = torch.isTensor

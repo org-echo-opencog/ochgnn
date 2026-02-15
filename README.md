@@ -1,8 +1,45 @@
-# Neural Network Graph Package
+# Neural Network Graph Package with OpenCog Integration
 
 [![Build Status](https://travis-ci.org/torch/nngraph.svg)](https://travis-ci.org/torch/nngraph) 
 
-This package provides graphical computation for `nn` library in [Torch](https://github.com/torch/torch7/blob/master/README.md).
+This package provides graphical computation for `nn` library in [Torch](https://github.com/torch/torch7/blob/master/README.md), with integrated support for **OpenCog AtomSpace** hypergraph neural networks.
+
+## 🧠 New: OpenCog AtomSpace Integration
+
+This enhanced version includes **hypergraph neural networks** that can process **OpenCog AtomSpace** knowledge representations:
+
+- **AtomSpace**: Hypergraph knowledge representation with atoms and links
+- **Neural Integration**: Embeddings, attention, and learning for symbolic knowledge  
+- **Pattern Matching**: Neural pattern recognition in knowledge graphs
+- **Truth Values**: Probabilistic reasoning with learned truth values
+- **Attention Allocation**: Cognitive attention mechanisms for knowledge processing
+
+See [OPENCOG_INTEGRATION.md](OPENCOG_INTEGRATION.md) for detailed documentation and [examples/](examples/) for usage examples.
+
+## Quick Start: OpenCog AtomSpace
+
+```lua
+require 'nngraph'
+
+-- Create atomspace and knowledge
+local atomspace = nngraph.AtomSpace()
+local AtomTypes = require('nngraph.atom_types')
+
+local cat = atomspace:addAtom(AtomTypes.CONCEPT_NODE, "cat")  
+local animal = atomspace:addAtom(AtomTypes.CONCEPT_NODE, "animal")
+local inheritance = atomspace:addAtom(AtomTypes.INHERITANCE_LINK, nil, {cat, animal})
+
+-- Set truth values
+atomspace:setTruthValue(cat, 0.9, 0.8)
+
+-- Create hypergraph neural network
+local hgnn = nn.HypergraphModule(atomspace)
+local output = hgnn:forward({cat, animal, inheritance})
+
+-- Pattern matching
+local matches = hgnn:matchPattern({type = AtomTypes.CONCEPT_NODE})
+print("Found", #matches, "concepts")
+```
 
 ## Requirements
 
