@@ -123,6 +123,8 @@ function RootedHypershell:getEmbedding(handle)
         return torch.zeros(self.embeddingDim)
     end
     
+    -- Use deterministic initialization based on atom handle
+    torch.manualSeed(handle % 2147483647)  -- Use handle as seed for determinism
     local embedding = torch.randn(self.embeddingDim) * 0.1
     
     -- Incorporate truth value

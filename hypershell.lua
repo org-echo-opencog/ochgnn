@@ -110,21 +110,26 @@ function Hypershell:getNeighbors(handle)
         end
     end
     
-    -- Find links that contain this atom
+    -- Find links that contain this atom (incoming links)
+    -- Note: This could be optimized with an inverse index in atomspace
+    -- For now, we use a simple iteration but limit the search
     local allAtoms = self.atomspace:getAllAtoms()
     for _, otherHandle in ipairs(allAtoms) do
-        local otherAtom = self.atomspace:getAtom(otherHandle)
-        if otherAtom and otherAtom.outgoing then
-            for _, outgoingHandle in ipairs(otherAtom.outgoing) do
-                if outgoingHandle == handle then
-                    table.insert(neighbors, otherHandle)
-                    -- Also add other atoms in the same link
-                    for _, siblingHandle in ipairs(otherAtom.outgoing) do
-                        if siblingHandle ~= handle then
-                            table.insert(neighbors, siblingHandle)
+        if otherHandle ~= handle then
+            local otherAtom = self.atomspace:getAtom(otherHandle)
+            if otherAtom and otherAtom.outgoing then
+                for _, outgoingHandle in ipairs(otherAtom.outgoing) do
+                    if outgoingHandle == handle then
+                        -- Add the link itself as a neighbor
+                        table.insert(neighbors, otherHandle)
+                        -- Add siblings (other atoms in the same link)
+                        for _, siblingHandle in ipairs(otherAtom.outgoing) do
+                            if siblingHandle ~= handle then
+                                table.insert(neighbors, siblingHandle)
+                            end
                         end
+                        break
                     end
-                    break
                 end
             end
         end

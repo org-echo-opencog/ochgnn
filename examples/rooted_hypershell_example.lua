@@ -177,13 +177,16 @@ for i, result in ipairs(relevantNodes) do
 end
 print()
 
+-- Constants
+local MAX_TREE_STR_LENGTH = 200
+
 -- Display the tree structure
 print("9. Rooted Tree Structure (Parenthesis Notation):")
 local tree = rootedHypershell:getTree()
 local treeStr = tree:toString()
 -- Limit output length for readability
-if #treeStr > 200 then
-    print(treeStr:sub(1, 200) .. "...")
+if #treeStr > MAX_TREE_STR_LENGTH then
+    print(treeStr:sub(1, MAX_TREE_STR_LENGTH) .. "...")
 else
     print(treeStr)
 end

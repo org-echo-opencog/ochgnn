@@ -106,7 +106,8 @@ local function testA000081Sequence()
     print("Testing A000081 sequence calculation...")
     
     -- Known values from OEIS A000081
-    local expected = {0, 1, 1, 2, 4, 9, 20, 48}
+    -- Extended to test more values
+    local expected = {0, 1, 1, 2, 4, 9, 20, 48, 115, 286, 719}
     
     for i = 0, #expected - 1 do
         local actual = RootedTree.countRootedTrees(i)
@@ -115,10 +116,10 @@ local function testA000081Sequence()
     end
     
     -- Test sequence generation
-    local sequence = RootedTree.getA000081Sequence(7)
-    assertEq(#sequence, 8, "Sequence should have 8 elements (0-7)")
+    local sequence = RootedTree.getA000081Sequence(10)
+    assertEq(#sequence, 11, "Sequence should have 11 elements (0-10)")
     
-    for i = 0, 7 do
+    for i = 0, 10 do
         assertEq(sequence[i + 1], expected[i + 1],
                  string.format("Sequence[%d] should be %d", i, expected[i + 1]))
     end

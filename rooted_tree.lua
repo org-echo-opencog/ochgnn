@@ -118,6 +118,7 @@ end
 
 -- Calculate A000081 sequence value (rooted trees with n nodes)
 -- This is a recursive formula based on the OEIS definition
+-- Uses memoization via cache for efficiency
 local a000081_cache = {[0] = 0, [1] = 1}
 
 local function calculateA000081(n)
@@ -125,25 +126,26 @@ local function calculateA000081(n)
         return a000081_cache[n]
     end
     
-    -- Calculate sum of divisors times a(d)
-    local function divisorSum(k)
-        local sum = 0
-        for d = 1, k do
-            if k % d == 0 then
-                sum = sum + d * calculateA000081(d)
+    -- Pre-calculate all values up to n using dynamic programming (bottom-up)
+    for i = 2, n do
+        if not a000081_cache[i] then
+            -- Recurrence: a(i) = (1/(i-1)) * Sum_{k=1..i-1} (Sum_{d|k} d*a(d)) * a(i-k)
+            local result = 0
+            for k = 1, i - 1 do
+                -- Calculate divisor sum for k
+                local divisorSum = 0
+                for d = 1, k do
+                    if k % d == 0 then
+                        divisorSum = divisorSum + d * calculateA000081(d)
+                    end
+                end
+                result = result + divisorSum * calculateA000081(i - k)
             end
+            result = result / (i - 1)
+            a000081_cache[i] = math.floor(result + 0.5)  -- Round to nearest integer
         end
-        return sum
     end
     
-    -- Recurrence: a(n) = (1/(n-1)) * Sum_{k=1..n-1} (Sum_{d|k} d*a(d)) * a(n-k)
-    local result = 0
-    for k = 1, n - 1 do
-        result = result + divisorSum(k) * calculateA000081(n - k)
-    end
-    result = result / (n - 1)
-    
-    a000081_cache[n] = math.floor(result + 0.5)  -- Round to nearest integer
     return a000081_cache[n]
 end
 
