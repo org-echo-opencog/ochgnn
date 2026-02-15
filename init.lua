@@ -17,6 +17,11 @@ require('nngraph.atom_types')
 require('nngraph.atom_node')
 require('nngraph.hypergraph_module')
 
+-- Rooted Hypershell Architecture
+require('nngraph.rooted_tree')
+require('nngraph.hypershell')
+require('nngraph.rooted_hypershell')
+
 -- handy functions
 local utils = require('nngraph.utils')
 local istensor = torch.isTensor
