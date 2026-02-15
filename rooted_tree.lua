@@ -121,6 +121,9 @@ end
 -- Uses memoization via cache for efficiency
 local a000081_cache = {[0] = 0, [1] = 1}
 
+-- Tolerance for validating that result is close to an integer
+local ROUNDING_TOLERANCE = 0.01
+
 local function calculateA000081(n)
     if a000081_cache[n] then
         return a000081_cache[n]
@@ -142,7 +145,14 @@ local function calculateA000081(n)
                 result = result + divisorSum * calculateA000081(i - k)
             end
             result = result / (i - 1)
-            a000081_cache[i] = math.floor(result + 0.5)  -- Round to nearest integer
+            
+            -- Validate that result is close to an integer
+            local rounded = math.floor(result + 0.5)
+            if math.abs(result - rounded) > ROUNDING_TOLERANCE then
+                error(string.format("A000081 calculation error at n=%d: result %f is not close to integer", i, result))
+            end
+            
+            a000081_cache[i] = rounded
         end
     end
     

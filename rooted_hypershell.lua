@@ -16,6 +16,9 @@ require 'nn'
 
 local RootedHypershell, parent = torch.class('nn.RootedHypershell', 'nn.Module')
 
+-- Constants
+local MAX_RANDOM_SEED = 2147483647  -- 2^31 - 1, maximum value for Torch random seed
+
 function RootedHypershell:__init(atomspace, rootHandle, options)
     parent.__init(self)
     
@@ -124,7 +127,7 @@ function RootedHypershell:getEmbedding(handle)
     end
     
     -- Use deterministic initialization based on atom handle
-    torch.manualSeed(handle % 2147483647)  -- Use handle as seed for determinism
+    torch.manualSeed(handle % MAX_RANDOM_SEED)  -- Use handle as seed for determinism
     local embedding = torch.randn(self.embeddingDim) * 0.1
     
     -- Incorporate truth value

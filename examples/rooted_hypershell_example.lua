@@ -13,6 +13,9 @@ require 'nngraph'
 local AtomTypes = require('nngraph.atom_types')
 local RootedTree = require('nngraph.rooted_tree')
 
+-- Configuration constants
+local MAX_TREE_STR_LENGTH = 200
+
 print("==============================================")
 print("Rooted Hypershell Architecture Example")
 print("==============================================\n")
@@ -176,9 +179,6 @@ for i, result in ipairs(relevantNodes) do
     end
 end
 print()
-
--- Constants
-local MAX_TREE_STR_LENGTH = 200
 
 -- Display the tree structure
 print("9. Rooted Tree Structure (Parenthesis Notation):")

@@ -105,8 +105,8 @@ end
 local function testA000081Sequence()
     print("Testing A000081 sequence calculation...")
     
-    -- Known values from OEIS A000081
-    -- Extended to test more values
+    -- Known values from OEIS A000081: https://oeis.org/A000081
+    -- Sequence: Number of unlabeled rooted trees with n nodes
     local expected = {0, 1, 1, 2, 4, 9, 20, 48, 115, 286, 719}
     
     for i = 0, #expected - 1 do

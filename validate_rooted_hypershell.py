@@ -322,8 +322,8 @@ if __name__ == '__main__':
     script_dir = os.path.dirname(os.path.abspath(__file__))
     if os.path.exists(os.path.join(script_dir, 'rooted_tree.lua')):
         os.chdir(script_dir)
-    elif os.path.exists(os.path.join(script_dir, '..', 'rooted_tree.lua')):
-        os.chdir(os.path.join(script_dir, '..'))
+    elif os.path.exists(os.path.join(os.path.dirname(script_dir), 'rooted_tree.lua')):
+        os.chdir(os.path.dirname(script_dir))
     else:
         print("Error: Could not find project root directory")
         sys.exit(1)

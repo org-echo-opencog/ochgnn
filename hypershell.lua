@@ -111,8 +111,9 @@ function Hypershell:getNeighbors(handle)
     end
     
     -- Find links that contain this atom (incoming links)
-    -- Note: This could be optimized with an inverse index in atomspace
-    -- For now, we use a simple iteration but limit the search
+    -- PERFORMANCE NOTE: This has O(N) complexity per node lookup, resulting in O(N²)
+    -- for shell construction. For large atomspaces, consider adding an inverse index
+    -- (handle -> containing links) to the atomspace for O(1) lookups.
     local allAtoms = self.atomspace:getAllAtoms()
     for _, otherHandle in ipairs(allAtoms) do
         if otherHandle ~= handle then
