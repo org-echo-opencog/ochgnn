@@ -13,8 +13,9 @@ This enhanced version includes **hypergraph neural networks** that can process *
 - **Pattern Matching**: Neural pattern recognition in knowledge graphs
 - **Truth Values**: Probabilistic reasoning with learned truth values
 - **Attention Allocation**: Cognitive attention mechanisms for knowledge processing
+- **Rooted Hypershell Architecture**: Hierarchical shell-based processing with OEIS A000081 rooted tree enumeration
 
-See [OPENCOG_INTEGRATION.md](OPENCOG_INTEGRATION.md) for detailed documentation and [examples/](examples/) for usage examples.
+See [OPENCOG_INTEGRATION.md](OPENCOG_INTEGRATION.md) and [doc/ROOTED_HYPERSHELL.md](doc/ROOTED_HYPERSHELL.md) for detailed documentation and [examples/](examples/) for usage examples.
 
 ## Quick Start: OpenCog AtomSpace
 
@@ -39,6 +40,31 @@ local output = hgnn:forward({cat, animal, inheritance})
 -- Pattern matching
 local matches = hgnn:matchPattern({type = AtomTypes.CONCEPT_NODE})
 print("Found", #matches, "concepts")
+```
+
+## Quick Start: Rooted Hypershell Architecture
+
+```lua
+require 'nngraph'
+local RootedTree = require('nngraph.rooted_tree')
+
+-- Calculate OEIS A000081 (rooted tree enumeration)
+local sequence = RootedTree.getA000081Sequence(10)
+-- {0, 1, 1, 2, 4, 9, 20, 48, 115, 286, 719}
+
+-- Create rooted hypershell for hierarchical knowledge processing
+local atomspace = nngraph.AtomSpace()
+local root = atomspace:addAtom(AtomTypes.CONCEPT_NODE, "root_concept")
+
+local rhs = nn.RootedHypershell(atomspace, root, {
+    embeddingDim = 64,
+    hiddenDim = 128,
+    numShells = 5
+})
+
+-- Process hierarchically through shells
+local output = rhs:forward(nil)
+rhs:spreadAttention(3)  -- Spread attention through shells
 ```
 
 ## Requirements
